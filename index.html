@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | Haute Gastronomy & Bistro Menu</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Mathematical Motion Canvas Background -->
+    <canvas id="mathMotionCanvas" class="math-motion-canvas"></canvas>
+
+    <!-- Background Ambient Glows -->
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+
+    <!-- Top Navigation Bar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="brand">
+                <span class="brand-sub">FINE DINING & CRAFT KITCHEN</span>
+                <h1 class="brand-logo">AURA<span>.</span></h1>
+            </div>
+            
+            <div class="nav-actions">
+                <!-- Math Motion Mode Selector Button -->
+                <div class="math-motion-controls">
+                    <button class="math-toggle-btn" id="mathModeBtn" title="Cycle Math Motion Modes">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span id="mathModeLabel">Math: Lissajous Flow</span>
+                    </button>
+                </div>
+                
+                <div class="table-badge">
+                    <i class="fa-solid fa-utensils"></i>
+                    <span>Table #07</span>
+                </div>
+                <button class="cart-btn" id="openCartBtn" aria-label="View Order Cart">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="cart-label">My Order</span>
+                    <span class="cart-count" id="cartCountBadge">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <span class="hero-pill"><i class="fa-solid fa-star"></i> Culinary Excellence Everyday</span>
+            <h2 class="hero-title">Experience Flavors Crafted With <em>Passion</em></h2>
+            <p class="hero-desc">Indulge in artisanal recipes created with farm-fresh organic ingredients, curated by Master Chefs.</p>
+            
+            <!-- Search & Controls Bar -->
+            <div class="search-filter-wrapper">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Search dishes, ingredients, or drinks..." autocomplete="off">
+                    <button class="clear-search-btn" id="clearSearchBtn" title="Clear search"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="sort-box">
+                    <i class="fa-solid fa-arrow-down-short-wide"></i>
+                    <select id="sortSelect">
+                        <option value="featured">Featured First</option>
+                        <option value="rating">Top Rated</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="calories">Lowest Calories</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Tabs -->
+    <nav class="categories-bar">
+        <div class="category-scroll-container" id="categoryTabs">
+            <button class="cat-tab active" data-category="all">
+                <i class="fa-solid fa-fire"></i>
+                <span>All Dishes</span>
+            </button>
+            <button class="cat-tab" data-category="burgers">
+                <i class="fa-solid fa-burger"></i>
+                <span>Burgers & Mains</span>
+            </button>
+            <button class="cat-tab" data-category="pizza">
+                <i class="fa-solid fa-pizza-slice"></i>
+                <span>Artisan Pizza</span>
+            </button>
+            <button class="cat-tab" data-category="pasta">
+                <i class="fa-solid fa-bowl-food"></i>
+                <span>Fresh Pasta</span>
+            </button>
+            <button class="cat-tab" data-category="sides">
+                <i class="fa-solid fa-cubes-stacked"></i>
+                <span>Sides & Crunch</span>
+            </button>
+            <button class="cat-tab" data-category="desserts">
+                <i class="fa-solid fa-cake-candles"></i>
+                <span>Desserts</span>
+            </button>
+            <button class="cat-tab" data-category="beverages">
+                <i class="fa-solid fa-martini-glass-citrus"></i>
+                <span>Drinks & Mocktails</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Dietary Filter Chips -->
+    <div class="dietary-filter-container">
+        <div class="dietary-tags">
+            <button class="diet-btn active" data-diet="all">All</button>
+            <button class="diet-btn" data-diet="veg"><span class="veg-dot"></span> Vegetarian</button>
+            <button class="diet-btn" data-diet="non-veg"><span class="nonveg-dot"></span> Non-Veg</button>
+            <button class="diet-btn" data-diet="chef"><i class="fa-solid fa-award"></i> Chef's Choice</button>
+            <button class="diet-btn" data-diet="spicy"><i class="fa-solid fa-pepper-hot"></i> Spicy</button>
+        </div>
+        <div class="menu-counter">
+            Showing <strong id="itemCounter">6</strong> culinary creations
+        </div>
+    </div>
+
+    <!-- Main Menu Grid -->
+    <main class="menu-container">
+        <div class="menu-grid" id="menuGrid">
+            <!-- Menu cards will be dynamically rendered by JavaScript -->
+        </div>
+
+        <!-- No Results Fallback -->
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <div class="empty-icon"><i class="fa-solid fa-utensils"></i></div>
+            <h3>No culinary matches found</h3>
+            <p>Try searching for other ingredients, categories, or clear your filters.</p>
+            <button class="reset-filter-btn" id="resetFiltersBtn">Reset Filters</button>
+        </div>
+    </main>
+
+    <!-- Footer Information -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h2>AURA<span>.</span></h2>
+                <p>Curating extraordinary dining experiences with pure passion and craft.</p>
+            </div>
+            <div class="footer-info">
+                <div>
+                    <h4><i class="fa-regular fa-clock"></i> Kitchen Hours</h4>
+                    <p>Mon - Sun: 12:00 PM - 11:30 PM</p>
+                </div>
+                <div>
+                    <h4><i class="fa-solid fa-location-dot"></i> Location</h4>
+                    <p>42 Gourmet Avenue, Grand Plaza</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 AURA Restaurant & Lounge. All Rights Reserved. Master Crafted Digital Menu.</p>
+        </div>
+    </footer>
+
+    <!-- Quick View Product Modal -->
+    <div class="modal-overlay" id="quickViewModal">
+        <div class="modal-container">
+            <button class="modal-close-btn" id="closeModalBtn" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-body" id="modalContent">
+                <!-- Content dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart / Order Summary Drawer -->
+    <div class="cart-drawer-overlay" id="cartOverlay"></div>
+    <aside class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <div class="cart-title-wrap">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <h3>Your Table Order</h3>
+            </div>
+            <button class="close-cart-btn" id="closeCartBtn"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+
+        <div class="cart-dining-info">
+            <div class="dining-pill active"><i class="fa-solid fa-chair"></i> Dine-In (Table 07)</div>
+            <div class="dining-pill"><i class="fa-solid fa-box"></i> Takeaway</div>
+        </div>
+
+        <div class="cart-items-container" id="cartItemsList">
+            <!-- Dynamic Cart Items -->
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-summary-breakdown">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotalPrice">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>GST / Taxes (5%)</span>
+                    <span id="taxPrice">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Service Charge (10%)</span>
+                    <span id="serviceFee">$0.00</span>
+                </div>
+                <div class="summary-divider"></div>
+                <div class="summary-row grand-total">
+                    <span>Grand Total</span>
+                    <span id="grandTotalPrice">$0.00</span>
+                </div>
+            </div>
+            
+            <div class="special-instruction-box">
+                <input type="text" placeholder="Add kitchen notes (e.g. no onions, extra crispy)...">
+            </div>
+
+            <button class="place-order-btn" id="placeOrderBtn" disabled>
+                <span>Confirm & Send to Kitchen</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Order Success Confirmation Modal -->
+    <div class="modal-overlay" id="orderSuccessModal">
+        <div class="modal-container success-modal-container">
+            <div class="success-icon-wrap">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h2>Order Sent to the Kitchen!</h2>
+            <p>Your culinary journey is underway. Our chef has received your ticket for <strong>Table #07</strong>.</p>
+            
+            <div class="order-receipt-summary" id="receiptSummary">
+                <!-- Receipt details populated via JS -->
+            </div>
+
+            <div class="prep-timer">
+                <i class="fa-solid fa-hourglass-half"></i>
+                <span>Estimated Serving Time: <strong>18-22 mins</strong></span>
+            </div>
+
+            <button class="primary-btn done-btn" id="closeSuccessBtn">Back to Menu</button>
+        </div>
+    </div>
+
+    <!-- Floating Toast Notification -->
+    <div class="toast-notification" id="toast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Item added to your order!</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
